@@ -61,7 +61,11 @@ app.use('/privacypolicy', privacypolicy)
 app.use('/tnc', tncRoute)
 app.use('/hns', handsRoute)
 
+app.use('/', (req, res)=>{
 
+
+    res.send("Well Done")
+})
 app.listen(port, () => {
     console.log('server is up on the ' + port)
 })
