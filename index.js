@@ -62,7 +62,7 @@ app.use('/tnc', tncRoute)
 app.use('/hns', handsRoute)
 
 app.listen(port, () => {
-    console.log('server is up on the ' + port)
+    console.log('server is up on the port ' + port)
 })
 
 

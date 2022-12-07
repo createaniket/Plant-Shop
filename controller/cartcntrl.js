@@ -12,7 +12,6 @@ const { Error } = require('mongoose');
 
 
 exports.addToCart = async(req,res) => {
-console.log(req.user)
 
 const payload = req.body
 const result = await cartEnt.addToCart({
