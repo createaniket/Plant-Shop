@@ -17,6 +17,7 @@ router.post('/users',  async (req, res) => {
     try {
         await user.save()
         console.log("this is saved user", user)
+        console.log("token key h boossss", process.env.Token_key)
 
         // sendWelcomeMail(user.email, user.name)
         const token = await user.generateAuthToken()
