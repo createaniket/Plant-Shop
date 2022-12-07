@@ -20,7 +20,9 @@ router.post('/users',  async (req, res) => {
 
         // sendWelcomeMail(user.email, user.name)
         const token = await user.generateAuthToken()
-        res.status(201).send({user,token})
+        res.status(201).json({user:user,
+            token:token})
+            console.log("this is user with token" , user)
     }
     catch (e){
         res.status(400).send(e)
