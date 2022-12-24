@@ -9,26 +9,15 @@ router.post('/add/:id', Auth , async(req, res)=>{
 
     try {
 
-        const got = await Wishlist.find({user:req.user.id,
-        products:req.body.product})
+        console.log("kecbhwfvw kaam kiy ah ahye route", req.user.id)
 
+        // const got = await Wishlist.find({user:req.user.id,
+        // products:req.body.product})
 
-
-
-
-
-
-        
         console.log(req.user.id)
-        console.log(req.body.product)
+        // console.log(req.body.product)
 // console.log(got!=[])
-        if(req.body.product == undefined){
-
-
-
-
-
-            
+        if(req.body.product == undefined){            
             const addtowishlist = new Wishlist({
                 user: req.user.id,
                 products: req.params.id
@@ -37,16 +26,13 @@ router.post('/add/:id', Auth , async(req, res)=>{
             console.log(result)
             res.status(201).json({
                 message: "Added to wishlist sucessfully",
-                data:result
+                // data:result
 })
 
 
 
-
-
-
         }else{
-            res.status(500).send("already present")
+            res.status(200).json({message:"already present"})
 
 
         }

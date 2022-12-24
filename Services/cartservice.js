@@ -144,11 +144,13 @@ exports.deleteCartItem = async(  userId, _id)=>{
   console.log(_id)
   console.log(userId)
   try{
-    let result = cart.updateOne({userid:userId}, { $pull:{ products : {productid: _id} }}, {multi: true})
-if (result){
+
+                              const minresult = await cart.findOneAndUpdate(userId,  { $pull:{ products : {product: _id} }} )
+
+                              const crctwayresult = minresult.products.length
+if (crctwayresult > 0){
   return {
     success: true,
-    data:result,
     code: 200,
     message: 'Successfully Deleted'
      }

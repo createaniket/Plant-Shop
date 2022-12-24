@@ -195,18 +195,22 @@ exports.increase = async(req, res)=>{
     res.status(result.code).json({
         success:result.success,
         message: result.message,
-        data:result.data
     })   
 }
- 
+else{
+
+
     res.status(result.code).json({
         success:result.success,
         message: result.error
     })
+}
+ 
 
     }catch (error) {
 
-        res.send(error)
+        console.log("asdvgbnvhvjvc", error)
+        // res.send(error)
     }
  }
 
