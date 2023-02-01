@@ -59,9 +59,15 @@ exports.addProduct = async (req, res) => {
   
     }
 
+try{
 
-    Product.findByIdAndUpdate(productid,  {productimg:addImage} )
-    res.status(201).send("Successfully updated all the images")
+
+ const result = await Product.findByIdAndUpdate(productid,  {productimg:addImage} )
+
+  res.status(201).send( result)
+} catch (e){
+  res.status(200).send(e)
+}
 
   }  
 
