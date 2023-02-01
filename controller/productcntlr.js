@@ -16,6 +16,8 @@ exports.addProduct = async (req, res) => {
   }
 
 
+
+
   const newproduct = new Product({
       title: req.body.title,
       description:req.body.description,
@@ -41,6 +43,27 @@ exports.addProduct = async (req, res) => {
       }
     });
   }
+
+  
+  exports.updateimage = async (req, res) => {
+
+
+
+    const productid = req.params.id
+    let addImage = [];
+    if(req.files && req.files.length){
+  
+      addImage = req.files.map((image) => {
+        return image.path
+      })
+  
+    }
+
+
+    Product.findByIdAndUpdate(productid,  {productimg:addImage} )
+    res.status(201).send("Successfully updated all the images")
+
+  }  
 
   exports.getProduct = async (req, res) => {
 try{

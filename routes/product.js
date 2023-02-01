@@ -15,7 +15,8 @@ getProduct,
 getbyid,
 deleteall,
 deletebyid,
-getrandom} = require('../controller/productcntlr')
+getrandom,
+updateimage} = require('../controller/productcntlr')
 
   
 
@@ -23,6 +24,8 @@ router.post('/add', ADAuth, upload_Product.array('product_images', 10), addProdu
 router.get("/get", getProduct);
 
 router.get('/get/:id',  getbyid)
+router.patch('/updateimg/:id',upload_Product.array('product_images', 10),  updateimage)
+
 router.delete('/deletebyid/:id',ADAuth, deletebyid)
 router.delete('/deleteall',ADAuth, deleteall)
 
