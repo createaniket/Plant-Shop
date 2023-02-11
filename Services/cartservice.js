@@ -208,7 +208,7 @@ if (realresult){
 // to clear the whole cart by user id
 exports.emptycart = async(_id)=>{
   try{
-    let result = await cart.findOne({id:_id})
+    let result = cart.findOne({user:_id})
 result.products = undefined
 await result.save() 
     if (result) {

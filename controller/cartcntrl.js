@@ -163,7 +163,7 @@ exports.decrease = async(req, res)=>{
 
  exports.emptycart = async(req,res) =>{
     try {
-        let _id = req.params.id
+        let _id = req.user
         let result = await cartEnt.emptycart(_id)
         if(result.success){
             res.status(result.code).json({
