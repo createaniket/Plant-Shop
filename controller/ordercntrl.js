@@ -86,7 +86,7 @@ console.log(order)
     const orderOptions = {
       // amount: amount * 10,
       // amount: 
-      amount : amount * 10,
+      amount : amount * 100,
       currency: "INR",
     };
 
@@ -123,6 +123,30 @@ res.status(500).send(e)
 
   }
 }
+
+
+
+
+
+exports.verifyOrder = async(req, res, next)=>{
+
+
+  try{
+
+
+    // To be written
+    // from youtube
+
+  }catch (error){
+
+    res.status(500).json({
+      messsage:"Somethingg wrong happened",
+      data:error
+    })
+  }
+
+}
+
 exports.getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({

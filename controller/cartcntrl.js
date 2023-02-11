@@ -62,14 +62,21 @@ message:error.message
 })
 }
 }
+
+
+
+
+
+
 exports.increase = async(req, res)=>{
 
   try{
  
     let userId = req.user
-    let result = await cartEnt.increase(userId)
+   let productId = req.params.id
+    let result = await cartEnt.increase(userId,productId )
 
-    console.log(result)
+    console.log("ye h incrse walli",result)
 
 
     
@@ -87,11 +94,46 @@ exports.increase = async(req, res)=>{
   }
 
 
-  }catch (e){
-
-
-  }
+  }catch (error) {
+    throw error
 }
+}
+
+
+exports.decrease = async(req, res)=>{
+
+    try{
+   
+      let userId = req.user
+      let productId = req.params.id
+      let result = await cartEnt.decrease(userId, productId)
+  
+      console.log("ye h decrsee wali",result)
+  
+  
+      
+      if (result.success) {
+        res.status(result.code).json({
+            success:result.success,
+            message: result.message,
+            data:result.data
+        })
+    } else {
+        res.status(result.code).json({
+            success:result.success,
+            message: result.error
+        })
+    }
+  
+  
+    }catch (error) {
+      throw error
+  }
+  }
+
+
+
+
  exports.getSingleUserCart= async(req,res) => {
     try {
         //    console.log(req.user)
@@ -116,48 +158,6 @@ exports.increase = async(req, res)=>{
             throw error
         }
  }
-
-
-
-
-// exports.updateQuantity = async (req, res, next) => {
-//   try {
-//     const product = req.params.id;
-//     const { quantity } = req.body;
-//     let cart = await Cart.findOne({
-//       user: req.user._id,
-//     });
-
-//     if (!cart) {
-//       cart = await createCart(req.user._id);
-//     }
-
-//     const productIndex = cart.products.findIndex((cartProduct) => {
-//       return cartProduct.product.toString() == product;
-//     });
-
-//     if (productIndex < 0 && quantity > 0) {
-//       cart.products.push({ product, quantity });
-//     } else if (productIndex >= 0 && quantity > 0) {
-//       cart.products[productIndex].quantity = quantity;
-//     } else if (productIndex >= 0) {
-//       cart.products.splice(productIndex, 1);
-//     }
-
-//     await cart.save();
-
-//     const cartResponse = await getCartResponse(cart);
-
-//     return res.status(200).json({
-//       success: true,
-//       msg: "cart updated",
-//       cart: cartResponse,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 
 
 
@@ -187,8 +187,6 @@ exports.increase = async(req, res)=>{
     try {
         let _id = req.params.id
         let userId = req.user.id
-        console.log('hjbmnchv')
-        console.log(_id)
  let result = await cartEnt.deleteCartItem(userId, _id)
 
  if(result.success){

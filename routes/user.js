@@ -178,8 +178,6 @@ router.patch('/users/me', Auth,  async (req, res) => {
 
 
 router.get('/users/me',Auth, async (req, res) =>{
-
-
     res.send(req.user)
 })
 
@@ -193,15 +191,11 @@ router.delete('/users/me', Auth,  async (req, res) => {
     
         res.status(200).send(req.user)
 
-
     }catch(e){
 
         res.status(500).send(e)
     }
+
 })
-
-
-
-
 
 module.exports = router

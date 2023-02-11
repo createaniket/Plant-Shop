@@ -11,7 +11,6 @@ function runUpdate(condition, updateData) {
 }
  
 exports.addToCart = async(payload) => {
-    // console.log(payload)
 try{
    let result = await cart.findOne({user:payload.user})
    if (!result){
@@ -21,10 +20,6 @@ try{
     })
    }
    const product = payload.product
-  
-
-
-
    const productIndex = result.products.findIndex((cartProduct) => {
      return cartProduct.product.toString() === product;
    })
@@ -81,15 +76,15 @@ exports.getCart = async() => {
   }
 
 
-  exports.increase = async(userId)=>{
-
+  exports.increase = async(userId, productId)=>{
     try{
-      let result = await cart.find({user:userId})
+      let result = await cart.findOne({user:userId._id})
       .populate('products.product')
-
-      // console.log("the result is " + result)
-      console.log("the result is in qntty" + result.products.product.quantity)
-
+      const mainproducts = result.products
+      const idofproduct = productId
+      const mainproductsObject = mainproducts.findIndex( ( element => element.product.id === idofproduct))
+      const afterupdate = mainproducts[mainproductsObject].quantity +=1;
+     const mainresultbest =  await result.save();
       if (result) {
         return {
           success: true,
@@ -104,14 +99,45 @@ exports.getCart = async() => {
           error: 'Record Not Found!!!'
         }
     }
-
-
-
     }catch (e){
-
-
     }
   }
+
+
+
+
+  
+  exports.decrease = async(userId,productId)=>{
+    try{
+      let result = await cart.findOne({user:userId._id})
+      .populate('products.product')
+
+      console.log("sddecbhcfejvcejvfrefverjfvre")
+      const mainproducts = result.products
+      const idofproduct = productId
+      const mainproductsObject = mainproducts.findIndex( ( element => element.product.id === idofproduct))
+      // const quantityofthatproduct = mainproducts[mainproductsObject].quantity +=1;
+
+      const afterupdate = mainproducts[mainproductsObject].quantity > 0 ? mainproducts[mainproductsObject].quantity -= 1 : mainproducts[mainproductsObject].quantity  +=0 ;
+      const mainresultbest =  await result.save();
+      if (result) {
+        return {
+          success: true,
+          data:result,
+          code: 200,
+          message: 'the product quantity'
+           }
+    } else {
+        return {
+            success: false,
+          code: 404,
+          error: 'Record Not Found!!!'
+        }
+    }
+    }catch (e){
+    }
+  }
+
 
 exports.getSingleUserCart = async(userId) =>{
   try{
@@ -144,11 +170,15 @@ exports.deleteCartItem = async(  userId, _id)=>{
   console.log(_id)
   console.log(userId)
   try{
+    let result = await cart.findOne({user:userId})
+    .populate('products.product')
+    const mainproducts = result.products
+    const idofproduct = _id
+    const IndexofThatProduct = mainproducts.findIndex( ( element => element.product.id === idofproduct))
+    const mainarray = mainproducts.splice(IndexofThatProduct, 1);
+    const realresult = await result.save();
 
-                              const minresult = await cart.findOneAndUpdate(userId,  { $pull:{ products : {product: _id} }} )
-
-                              const crctwayresult = minresult.products.length
-if (crctwayresult > 0){
+if (realresult){
   return {
     success: true,
     code: 200,
