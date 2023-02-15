@@ -98,8 +98,13 @@ console.log(order)
     order.orderStatus = "confirmed";
     await order.save();
 
+
+    const cart = await Cart.findOneAndUpdate({ user: req.user._id }, {products : [] })
+
+    await cart.save();
+
     return res.status(200).json({
-      msg: "order id ye kr rha h ",
+      msg: "Your order has been placed successfully",
       orderId: paymentGatewayOrder.id,
       amount: amount ,
     });
@@ -150,7 +155,7 @@ exports.verifyOrder = async(req, res, next)=>{
 exports.getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
-      user: req.user._id,
+      user: req.user,
       orderStatus: "confirmed",
     }).populate({
       path: "products.product",
