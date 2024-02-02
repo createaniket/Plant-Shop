@@ -34,7 +34,7 @@ const tncRoute = require('./routes/tandc')
         console.log(error)
     })
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 9000
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.json())
 app.use('/userroute', userRoute)
